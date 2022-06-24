@@ -251,6 +251,12 @@ const keys = {
 //this value will be changed every time when you press right checkDistancetoWin +=5 when press left checkDistancetoWin -=5
 let checkDistancetoWin = 0 // will be use to check the distnace player alredy hit and see if he won or not the game
 
+//aki checando todos os objetos no topo da platform ao inves de ser somente o player,, agora pode ser tb os inimigos
+function isOnTopOfPlatform({object, platform}){
+    return  (object.position.y + object.height <= platform.position.y && object.position.y + object.height + object.velocity.y >= platform.position.y && object.position.x + object.width >= platform.position.x && object.position.x <= platform.position.x + platform.width )
+
+}
+
 
 //everything in scene need to be called here to be to SHOW UP on screen
 //here is drawig the player follwinng the draw functiion
@@ -316,6 +322,13 @@ function animate(){
             rivers.forEach(river => {//now the player respect all the platforms in the array
                 river.position.x -= 5 //same speed as the player moving
             })
+
+            goombas.forEach(goomba => {//now the player respect all the platforms in the array
+                goomba.position.x -= 5 //same speed as the player moving
+            })
+
+
+
             
         }else if (keys.left.pressed && checkDistancetoWin > 0) { // aki se for maior doque  checkdistance > 0 maior q 0 ... dai ele deixa rolar mais pra esq se ano for ... nao vai deixar
             //it just change when platform moves
@@ -330,13 +343,21 @@ function animate(){
             rivers.forEach(river => {//now the player respect all the platforms in the array
                 river.position.x += 5 //same speed as the player moving
             })
+
+            // rivers.forEach(river => {//now the player respect all the platforms in the array
+            //     river.position.x += 5 //same speed as the player moving
+            // })
+
+            goombas.forEach(goomba => {//now the player respect all the platforms in the array
+                goomba.position.x += 5 //same speed as the player moving
+            })
            
         }
         
 
     } 
 
-    console.log(checkDistancetoWin)
+    //console.log(checkDistancetoWin)
     
 
     //now the player respect all the platforms in the array
@@ -345,11 +366,24 @@ function animate(){
     //assim que localiza colizao... fundo do player com o topo da platform... also qdo you have the plyer going out of the width of the platform
     //aki cheacndo fundo do player com o topo da platform,, e tambe o tamanha do player se ja passou da posicao a platform...
     // player altura    +  fundo dod player<= platform.altura &&   player.altura    +  fundo do player+ velocidade do player>=platform.altura &&  posicao do player esq/dir + larguradoplayer>= platfor posicao esq/dir && posicaoplayer<= posic/platform + plataform.largura...
-    if(player.position.y + player.height <= platform.position.y && player.position.y + player.height + player.velocity.y >= platform.position.y && player.position.x + player.width >= platform.position.x && player.position.x <= platform.position.x + platform.width){ //here has to be <= because going up on canvas is negative
+    if( isOnTopOfPlatform ({
+        object: player,
+        platform: platform
+    }) 
+    )  { //here has to be <= because going up on canvas is negative
         player.velocity.y = 0 // here stops the player movement
         canJump = true
         }
-       // if()
+
+        goombas.forEach(goomba => {
+            if(isOnTopOfPlatform ({
+                object: goomba,
+                platform: platform
+            })) {
+                goomba.velocity.y = 0
+            }
+        })
+       
 
 
     }) // loopForeach platforms
@@ -360,23 +394,9 @@ function animate(){
         console.log('YOU WIN')
     }
 
-    //loose condition
-    // if(player.position.y + player.height <= river.position.y){
-    //     console.log('you lose')
-    //     changeLifePoints()
-    //     // life -= 1
-    //     console.log(lifePoints)
-    // }
+   
 
-    // if(checkDistancetoWin > -8){
-    //  keys.left.pressed = false
-    // }else if (checkDistancetoWin >= 0){
-    //     keys.left.pressed = true
-    // }
-    //trying to make player stop to upper than the screen
-    // if(player.position.y <= canvas.height){
-        
-    // }
+    
 
 }//animate function
 animate()
