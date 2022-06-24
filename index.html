@@ -12,32 +12,48 @@
   body{
     margin: 0;
     background-color: rgb(140, 136, 136);
-    display: flex;
+    display: flexbox;
     align-items: center; /*made thins be in hte middle*/
     justify-content: center;  /* here made the canvas or other obj insde thebody be in the middle*/
     height: 100vh;
   }
-  /* .holdscreen{
+  .holdscreen{
     width: 1080px;
     height: 600px;
     background-color: aqua;
-    display:flex;
+    display:flexbox;
     align-items: center; /*made thins be in hte middle*/
-    /*justify-content: center;
+    justify-content: center; 
 
-  }*/
+  }
  
  
   canvas{
-    margin:0;
+    margin-top: 15px;
+    margin-left: 140px;
     width: 800px;
     height: 576;
   }
+  .holdscreen .screens{
+    height: 35px;
+    background-color: aquamarine;
+    display: flex;
+    justify-content: space-between;
+  }
+  .life{
+    background-color: blueviolet;
+    margin-left: 50px;
+    margin-right: 50px;
+    width: 60px;
+  }
+
 </style>
 <body>
   <div class="holdscreen">
     
     <div class="screens">
+      <div id="life" class="life">3</div>
+      <div id="life" class="life">3</div>
       <div id="life" class="life">3</div>
     </div>
     <canvas></canvas>

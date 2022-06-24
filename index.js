@@ -2,18 +2,20 @@
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d') //type of canvas 3d or 2dwdw
 //console.log(c)
-
+const imgPLatforms = new Image()
 
 
 // const imgPLatforms = new Image()
-// imgPLatforms.src = './img/platform2.PNG'
+
 // console.log(imgPLatforms)
 
 
 // imgPLatforms.onload = () => {
-//     c.drawImage(imgPLatforms, 0, 0)
+
+//     c.drawImage(imgPLatforms, 20, 20)
 // }
 
+// imgPLatforms.src = './img/platform2.PNG'
 //size of canvas //window.innerWidth makes the canvas fill the whole size of the screen in horizontal
 //canvas.width = window.innerWidth
 canvas.width = 1024
@@ -153,8 +155,21 @@ class Platform {
 
 
         // here was the old way to make the platforms now is comented because we will add the new image
-        c.fillStyle = 'blue'
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+        //c.fillStyle = 'blue'
+        //c.fillRect(this.position.x, this.position.y, this.width, this.height)
+       // const imgPLatforms = new Image()
+
+    console.log(imgPLatforms)
+
+
+   
+        
+     c.drawImage(imgPLatforms,this.position.x, this.position.y, this.width, this.height )
+    
+   
+
+    imgPLatforms.src = './img/platform2.PNG'
+
     }
     
     
@@ -267,11 +282,28 @@ function animate(){
 
     // //sem esse comando vai desenhar uma barra tipo arraastando o player pra baixo com rastro.. eese clear vai limpar isso e assim ver o player descendo qdo a gravity pull down
     // // aki vai limpar o x , y , e tb  a canvas inteira no width and height 
-    // c.clearRect(0, 0, canvas.width, canvas.height ) // agora sim limpando o rastro que ficava atras  do player 
+     //c.clearRect(0, 0, canvas.width, canvas.height ) // agora sim limpando o rastro que ficava atras  do player 
 
-    //guve some color to the cqanvas
+    //give some color to the cqanvas
     c.fillStyle = 'white'
-    c.fillRect(0, 0, canvas.width, canvas.height ) // agora sim limpando o rastro que ficava atras  do player 
+
+    
+    //c.beginPath()
+    c.clearRect(0, 0, canvas.width, canvas.height ) // agora sim limpando o rastro que ficava atras  do player 
+
+//     const imgPLatforms = new Image()
+
+//     console.log(imgPLatforms)
+
+
+//     imgPLatforms.onload = () => {
+
+//     c.drawImage(imgPLatforms, 20, 20, 30, 50)
+//     }
+
+// imgPLatforms.src = './img/platform2.PNG'
+
+
 
 
      //selecting platforms goin trough all of them 
