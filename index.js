@@ -1,5 +1,8 @@
 
 
+//LIFE
+
+
 
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d') //type of canvas 3d or 2dwdw
@@ -9,6 +12,11 @@ console.log(c)
 //canvas.width = window.innerWidth
 canvas.width = 1024
 canvas.height = 576
+
+let canJump = true
+
+let lifePoints = 3
+
 
 // const imgWidth = 30
 // const imgHeight = 30
@@ -20,7 +28,20 @@ canvas.height = 576
 //     c.drawImage(platformImg,0,0, imgWidth , height);
 // }
 
-const gravity = 1.5
+const gravity = 2.5
+
+
+let imgPLatforms = new Image();
+
+imgPLatforms.onload = function(){
+    let w = canvas.width
+    let nw = imgPLatforms.naturalWidth;
+    let nh = imgPLatforms.naturalHeight;
+    let aspect = nw/nh;
+    let h = w / aspect;
+}
+
+
  
 //CREATING THE PLAYER
 // it wont show the player yet , you will need to actually implement it 
@@ -61,8 +82,14 @@ class Player{
         if(this.position.y + this.height + this.velocity.y <= canvas.height){ //aki ta vendo se e menor pq no canas o num aumenta indo pra baixo, 
              this.velocity.y += gravity //acelerando overtime conforme vai rolando o game vai acelerando
         }else{
+            //here make player stop to fall after hit the ground of the canvas // qdo bate no chao docanvas ele para de cair
             this.velocity.y = 0 //condicoes da queda, se o corpo encostar no chao do canvas no height na altura do canvas no fundo
 
+        }
+        if(this.velocity.y != 0){
+            canJump = false
+        }else{
+            canJump = true
         }
     }
 
@@ -80,12 +107,11 @@ class Platform {
         //fixing the image size to matche with the platforms size
         // this.image = image 
         
-
         // this.width = image.width
         // this.height = image.height
 
-        this.width = 200
-        this.height = 20
+        this.width = 400
+        this.height = 120
         
 
     } //constructor
@@ -100,7 +126,43 @@ class Platform {
         c.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
     
+    
 }//Platform Function
+
+class River {
+    constructor( {x , y  }){
+        this.position ={
+            x, //now you give this value for each platform inside the array it is automatic
+            y //now you give this value for each platform inside the array it is automatic
+        }
+
+        //fixing the image size to matche with the platforms size
+        // this.image = image 
+        
+
+        // this.width = image.width
+        // this.height = image.height
+
+        this.width = 400
+        this.height = 50
+        
+
+    } //constructor
+    drawRiver(){
+        //switching the old blue box platfofm to an image you created
+        //using the same position x/y for this image
+        //c.drawImage(this.image, this.position.x , this.position.y)
+
+
+        // here was the old way to make the platforms now is comented because we will add the new image
+        c.fillStyle = 'green'
+        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+    }
+    
+    
+}//Platform Function
+
+
 
 
 //creating a html image
@@ -118,14 +180,25 @@ const player = new Player()
 const platforms = [
     new Platform({
         x: -1,
-        y:500,
+        y:480,
         //image: image
         }), 
-        new Platform({
-            x: 2200,
-            y:500,
-            //image: image
-            })
+    new Platform({
+        x: 580,
+        y:480,
+        //image: image
+        }),
+    
+   // new Platform({x: 530, y:500}),
+   // new Platform({x: 930, y:500})
+]
+
+const rivers = [
+    new River({
+        x: 200,
+        y:550,
+        //image: image
+        })  
    // new Platform({x: 530, y:500}),
    // new Platform({x: 930, y:500})
 ]
@@ -161,12 +234,22 @@ function animate(){
     c.fillRect(0, 0, canvas.width, canvas.height ) // agora sim limpando o rastro que ficava atras  do player 
 
 
+     //selecting platforms goin trough all of them 
+     rivers.forEach(river => {
+        //here drawing the platform making the platform show up
+         river.drawRiver()
+    })
     
     //selecting platforms goin trough all of them 
     platforms.forEach(platform => {
         //here drawing the platform making the platform show up
          platform.drawPlatform()
     })
+
+   
+
+
+
 
     //ao inves do console.log('..') , chame o player.update().. agora vai repetir a mesma acao varias vezes
     player.update() // aki chamando o update pq a function draw() foi chamada dentro do update()
@@ -181,7 +264,7 @@ function animate(){
         // velocity player moving
         player.velocity.x = 5 //if press , turn press right true, and add velocity
         //LIMITE PLYER NAO PASSA DA PAREDE NA ESQ LIMIT AREA TO PLAYER ON THE LEFT SIDE OF THE SCREEN
-    } else if(keys.left.pressed && player.position.x > 100 ){
+    } else if((keys.left.pressed && player.position.x > 100 ) || (keys.left.pressed && checkDistancetoWin === 0 && player.position.x > 0 )){
         player.velocity.x = -5 //if press , turn press left true, and add velocity 
     }else{ 
         //ou se bater no limite para o player ..pq abaixo a plataforma que vai mecher
@@ -194,13 +277,22 @@ function animate(){
             platforms.forEach(platform => {//now the player respect all the platforms in the array
                 platform.position.x -= 5 //same speed as the player moving
             })
+            rivers.forEach(river => {//now the player respect all the platforms in the array
+                river.position.x -= 5 //same speed as the player moving
+            })
             
-        }else if (keys.left.pressed) {
+        }else if (keys.left.pressed && checkDistancetoWin > 0) { // aki se for maior doque  checkdistance > 0 maior q 0 ... dai ele deixa rolar mais pra esq se ano for ... nao vai deixar
             //it just change when platform moves
             checkDistancetoWin -= 5  //heree going up with the distance check if player lose the game
             
+
+            //stop platforms to move
             platforms.forEach(platform => {//now the player respect all the platforms in the array
                 platform.position.x += 5 //same speed as the player moving
+            })
+
+            rivers.forEach(river => {//now the player respect all the platforms in the array
+                river.position.x += 5 //same speed as the player moving
             })
            
         }
@@ -219,17 +311,38 @@ function animate(){
     // player altura    +  fundo dod player<= platform.altura &&   player.altura    +  fundo do player+ velocidade do player>=platform.altura &&  posicao do player esq/dir + larguradoplayer>= platfor posicao esq/dir && posicaoplayer<= posic/platform + plataform.largura...
     if(player.position.y + player.height <= platform.position.y && player.position.y + player.height + player.velocity.y >= platform.position.y && player.position.x + player.width >= platform.position.x && player.position.x <= platform.position.x + platform.width){ //here has to be <= because going up on canvas is negative
         player.velocity.y = 0 // here stops the player movement
+        canJump = true
         }
     }) // loopForeach platforms
 
+
+    
     if(checkDistancetoWin >= 1000){
         console.log('YOU WIN')
     }
 
+    //loose condition
+    // if(player.position.y + player.height <= river.position.y){
+    //     console.log('you lose')
+    //     changeLifePoints()
+    //     // life -= 1
+    //     console.log(lifePoints)
+    // }
 
+    // if(checkDistancetoWin > -8){
+    //  keys.left.pressed = false
+    // }else if (checkDistancetoWin >= 0){
+    //     keys.left.pressed = true
+    // }
+    //trying to make player stop to upper than the screen
+    // if(player.position.y <= canvas.height){
+        
+    // }
 
 }//animate function
 animate()
+
+
 
 //calling the teclas keyboard // esse keycode mostra o keycode de cada tecla 
 addEventListener('keydown', ({ keyCode }) => { //ao inves de event pta ver o keyCode.. da tecla se vc colocar {keyCode} ele mostra direto o keyCode da tecla
@@ -249,8 +362,11 @@ addEventListener('keydown', ({ keyCode }) => { //ao inves de event pta ver o key
             //JUMP
         case 87:  //w
             console.log('up')
-            // this -=20 will be constant it wont increase the value . player will move  in the same velocity
-            player.velocity.y -= 30 //using negative numbe because the canvas down is positive and up is negative
+            if(canJump === true){
+                 // this -=20 will be constant it wont increase the value . player will move  in the same velocity
+            player.velocity.y -= 40 //using negative numbe because the canvas down is positive and up is negative
+            }
+           
             break
 
     }//switch
@@ -284,4 +400,11 @@ addEventListener('keyup', ({ keyCode }) => { //ao inves de event pta ver o keyCo
 
     console.log(keys.right.pressed)
 })
+
+//function fixJump
+function changeLifePoints(){
+    let life = document.querySelector('#life');
+    lifePoints--
+    life.innerHTML = lifePoints
+}
 
