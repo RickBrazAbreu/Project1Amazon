@@ -3,7 +3,7 @@ const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d') //type of canvas 3d or 2dwdw
 //console.log(c)
 const imgPLatforms = new Image()
-
+const imgPLayer = new Image()
 
 // const imgPLatforms = new Image()
 
@@ -101,9 +101,16 @@ class Player{
     //here using the canvas context c in this case 2d
     draw() {
         //adding color to the player
-        c.fillStyle = 'red'
+       // c.fillStyle = 'red'
         // where it will be drawing and how big is it passand altura largura e posicoes
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+        //c.fillRect(this.position.x, this.position.y, this.width, this.height)
+
+
+        //switching the old red box player to an image you created
+          //using the same position x/y for this image  
+       c.drawImage(imgPLayer,this.position.x, this.position.y, this.width, this.height )
+
+      imgPLayer.src = './img/tiao.PNG'
     }//draw
 
     update(){//here increasing overtime // but you need a aniamtion function
@@ -137,23 +144,12 @@ class Platform {
             y //now you give this value for each platform inside the array it is automatic
         }
 
-        //fixing the image size to matche with the platforms size
-        // this.image = image 
-        
-        // this.width = image.width
-        // this.height = image.height
-
         this.width = 400
         this.height = 120
         
 
     } //constructor
     drawPlatform(){
-        //switching the old blue box platfofm to an image you created
-        //using the same position x/y for this image
-        //c.drawImage(this.image, this.position.x , this.position.y)
-
-
         // here was the old way to make the platforms now is comented because we will add the new image
         //c.fillStyle = 'blue'
         //c.fillRect(this.position.x, this.position.y, this.width, this.height)
@@ -161,9 +157,8 @@ class Platform {
 
     console.log(imgPLatforms)
 
-
-   
-        
+      //switching the old blue box platfofm to an image you created
+        //using the same position x/y for this image  
      c.drawImage(imgPLatforms,this.position.x, this.position.y, this.width, this.height )
     
    
