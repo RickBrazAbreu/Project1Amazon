@@ -1,12 +1,18 @@
 
-
-//LIFE
-
-
-
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d') //type of canvas 3d or 2dwdw
-console.log(c)
+//console.log(c)
+
+
+
+// const imgPLatforms = new Image()
+// imgPLatforms.src = './img/platform2.PNG'
+// console.log(imgPLatforms)
+
+
+// imgPLatforms.onload = () => {
+//     c.drawImage(imgPLatforms, 0, 0)
+// }
 
 //size of canvas //window.innerWidth makes the canvas fill the whole size of the screen in horizontal
 //canvas.width = window.innerWidth
@@ -31,17 +37,42 @@ let lifePoints = 3
 const gravity = 2.5
 
 
-let imgPLatforms = new Image();
 
-imgPLatforms.onload = function(){
-    let w = canvas.width
-    let nw = imgPLatforms.naturalWidth;
-    let nh = imgPLatforms.naturalHeight;
-    let aspect = nw/nh;
-    let h = w / aspect;
-}
+class Goomba{
+    constructor( {position, velocity}){ //creating the enemy
+        this.position = {
+            x: position.x,
+            y: position.y,
+
+        }
+        this.velocity = {   //give movement to the enemy
+            x: velocity.x,
+            y: velocity.y,
+        }   //give movement to the enemy
+
+        this.width = 50
+        this.height = 50
+
+    }//constructor 
+
+    draw(){ //now drawing the enemy
+        c.fillStyle = 'orange'
+        c.fillRect(this.position.x, this.position.y, this.width, this.height) //here chamandp o canvas e pos e width..height
+    }
+    update() {
+        this.draw()
+
+        this.position.x += this.velocity.x
+        this.position.y += this.velocity.y
+
+        if(this.position.y + this.height + this.velocity.y <= canvas.height){ //aki ta vendo se e menor pq no canas o num aumenta indo pra baixo, 
+            this.velocity.y += gravity //acelerando overtime conforme vai rolando o game vai acelerando
+       }
 
 
+    }
+
+}//enemy classs
  
 //CREATING THE PLAYER
 // it wont show the player yet , you will need to actually implement it 
@@ -136,24 +167,13 @@ class River {
             y //now you give this value for each platform inside the array it is automatic
         }
 
-        //fixing the image size to matche with the platforms size
-        // this.image = image 
-        
-
-        // this.width = image.width
-        // this.height = image.height
-
         this.width = 400
         this.height = 50
         
 
     } //constructor
     drawRiver(){
-        //switching the old blue box platfofm to an image you created
-        //using the same position x/y for this image
-        //c.drawImage(this.image, this.position.x , this.position.y)
-
-
+        
         // here was the old way to make the platforms now is comented because we will add the new image
         c.fillStyle = 'green'
         c.fillRect(this.position.x, this.position.y, this.width, this.height)
@@ -165,43 +185,57 @@ class River {
 
 
 
-//creating a html image
-//const image = new Image()
+    //creating player
+        //here is actually making the  player show up at the position x / y
+        let player = new Player()
 
-//image.src = platformImg
-//console.log(image)
+       //let enemys = new []
+
+    //creating platforms
+        //here is actually making the  plaTFORM show up at the position x / y
+        //const platform = new Platform()
+    //creating multpiles platforms
+        let platforms = [
+            new Platform({
+                x: -1,
+                y:480,
+                //image: image
+                }), 
+            new Platform({
+                x: 580,
+                y:480,
+                //image: image
+                }),
+            
+        // new Platform({x: 530, y:500}),
+        // new Platform({x: 930, y:500})
+        ]
+        //creating the rivers
+        let rivers = [
+            new River({
+                x: 200,
+                y:550,
+                //image: image
+                })  
+       
+        ]
+    //creating ENEMY
+       let goombas = [new Goomba({
+            position:{
+                x:400,
+                y:100
+            },
+            velocity:{
+                x: -0.4,
+                y: 0
+            }
+        })
+
+       ] 
 
 
-//here is actually making the  player show up at the position x / y
-const player = new Player()
-//here is actually making the  plaTFORM show up at the position x / y
-//const platform = new Platform()
-//creating multpiles platforms
-const platforms = [
-    new Platform({
-        x: -1,
-        y:480,
-        //image: image
-        }), 
-    new Platform({
-        x: 580,
-        y:480,
-        //image: image
-        }),
-    
-   // new Platform({x: 530, y:500}),
-   // new Platform({x: 930, y:500})
-]
 
-const rivers = [
-    new River({
-        x: 200,
-        y:550,
-        //image: image
-        })  
-   // new Platform({x: 530, y:500}),
-   // new Platform({x: 930, y:500})
-]
+
 
 
 //here return true and false to the keys pressed
@@ -246,7 +280,9 @@ function animate(){
          platform.drawPlatform()
     })
 
-   
+   goombas.forEach(goomba =>{
+       goomba.update()
+   })
 
 
 
@@ -313,6 +349,9 @@ function animate(){
         player.velocity.y = 0 // here stops the player movement
         canJump = true
         }
+       // if()
+
+
     }) // loopForeach platforms
 
 
@@ -408,3 +447,19 @@ function changeLifePoints(){
     life.innerHTML = lifePoints
 }
 
+
+
+
+
+
+
+
+//let imgPLatforms = new Image();
+
+// imgPLatforms.onload = function(){
+//     let w = canvas.width
+//     let nw = imgPLatforms.naturalWidth;
+//     let nh = imgPLatforms.naturalHeight;
+//     let aspect = nw/nh;
+//     let h = w / aspect;
+// }
