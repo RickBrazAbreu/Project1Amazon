@@ -83,5 +83,59 @@ body{
   .text{
       color: white;
   }
+  .imgexplain{
+      margin: 50px;
+      width: 450px;
+      
+  }
+  .ScreenLoser{
+      /* display: flex; */
+      justify-content: center;
+      align-items: center;
+      margin-left: 5%;
+      width: 1550px;
+      height: 900px;
+      background-color: #d9eeed;
+      position:absolute
+  }
 
+  .ScreenLoser .containerLoser{
+    display: flexbox;
+    border-radius: 40px;
+    width: 650px;
+    height: 800px;
+    background-color: rgb(49, 44, 114);
+  }
+  .ScreenLoser .containerLoser .imgexplain{
+      text-align: center;
+  }
+  .ScreenLoser .containerLoser .playbtn{
+    width:  160px;
+    height: 55px;
+    margin: 5px;
+    border-radius:20px;
+    background-color: aliceblue;
+  }
 
+  .ScreenWinner{
+      /* display: flex; */
+      justify-content: center;
+      align-items: center;
+      margin-left: 5%;
+      width: 1550px;
+      height: 900px;
+      background-color: #d9eeed;
+      position:absolute
+  }
+
+  .ScreenWinner .containerWinner{
+    display: flexbox;
+    border-radius: 40px;
+    width: 650px;
+    height: 800px;
+    background-color: rgb(49, 44, 114);
+  }
+
+  .ScreenWinner .containerWinner .imgexplain{
+    text-align: center;
+  }

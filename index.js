@@ -8,6 +8,7 @@ let score = document.querySelector('#score');
 
 
 let initialScreen = document.querySelector('.ScreenFront');
+let loserScreen = document.querySelector('.ScreenLoser');
 let playbtn = document.querySelector('.play');
 let  restartbtn = document.querySelector('.restart');
 let menubtn = document.querySelector ('.menu');
@@ -931,7 +932,7 @@ function animate(){
 
     
     console.log(checkDistancetoWin)
-    if(checkDistancetoWin >= 1000){
+    if(checkDistancetoWin >= 3970){
         
         console.log('YOU WIN')
     }
@@ -1031,7 +1032,18 @@ function score10(){
 function ResetWholeGame(){
     if(lifePoints <= 0){
         console.log(lifePoints)
-       location.reload();
+        loserScreen.style.display = 'flex'
+        init()
+
+
+        lifePoints += 3
+        life.innerHTML = lifePoints
+
+        scorePoints = 0
+        score.innerHTML = scorePoints
+       //location.reload();
+    }else if(lifePoints > 0){
+        loserScreen.style.display = 'none'
     }
    
 }
@@ -1044,7 +1056,8 @@ function PLAYGAME (){
 }
 function RESTATGAME() {
     initialScreen.style.display = 'none'
-    location.reload()
+    loserScreen.style.display = 'none'
+    //location.reload()
   
     init()
     
@@ -1056,6 +1069,13 @@ function MENUBTN() {
     //init()
     
 }
+
+// function loser(){
+//     if( lifePoints <= 1){
+//         console.log('vide 1 ponto')
+//     }
+// }
+// loser()
 
 //score10()
 //here is working ...need to call it every time player looses life
