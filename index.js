@@ -4,6 +4,7 @@ const c = canvas.getContext('2d') //type of canvas 3d or 2dwdw
 //console.log(c)
 
 let life = document.querySelector('#life');
+let score = document.querySelector('#score');
 
 let imgPLatforms = new Image()
 let imgPLayer = new Image()
@@ -20,6 +21,7 @@ canvas.height = 576
 let canJump = true
 
 let lifePoints = 3
+let scorePoints = 0
 
 let enemyMoveLeft = true
 
@@ -275,14 +277,23 @@ let checkDistancetoWin = 0 // will be use to check the distnace player alredy hi
 
 
 
+/////////////////
+///////////        //////////// ///////
+///////// restarting
+
+
+
+
 
  //HERE  you are createing everything again but without the const or let... so when you call this function ... it will reset the previous creation you made before
     function init(){
 
+       
+
     //creating player
         //here is actually making the  player show up at the position x / y
          player = new Player()
-
+        
        // enemys = new []
 
     //creating platforms
@@ -405,6 +416,7 @@ function animate(){
        })) {
            //here throw the player up
            player.velocity.y -= 35
+           score10()
            //aki deleta o inimigo
            //            (inimigo, quantidade a ser destruido  = 1)
            goombas.splice(index , 1)
@@ -553,6 +565,7 @@ function animate(){
 
     if(player.position.y + player.height >= canvas.height){
         changeLifePoints()
+        //score10()
         init()
         console.log('you lose')
 
@@ -629,6 +642,12 @@ function changeLifePoints(){
     life.innerHTML = lifePoints
 }
 
+function score10(){
+    scorePoints += 10
+    score.innerHTML = scorePoints
+}
+
+//score10()
 //here is working ...need to call it every time player looses life
 //changeLifePoints()
 
