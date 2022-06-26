@@ -25,6 +25,9 @@ let canJump = true
 
 let lifePoints = 3
 
+let enemyMoveLeft = true
+//let timeForSidesEnemy = 10000
+
 
 // const imgWidth = 30
 // const imgHeight = 30
@@ -36,9 +39,29 @@ let lifePoints = 3
 //     c.drawImage(platformImg,0,0, imgWidth , height);
 // }
 
-const gravity = 2.5
+const gravity = 1.5
+
+// function goLeft(){
+//     enemyMoveLeft = true
+    
+
+// }   setTimeout("goLeft()" , 2000) ; 
+
+//here repeat the same movement forever switching between left and right forever
+let timeForSidesEnemy = 2500
+let t = setInterval(function () {
+    enemyMoveLeft = ( enemyMoveLeft == true ? '' : enemyMoveLeft == false);
+}, timeForSidesEnemy);
 
 
+// function goRight(){
+//     if(enemyMoveLeft === true){
+//         enemyMoveLeft = false
+//     }
+//    // enemyMoveLeft = false
+    
+    
+// }   setTimeout("goRight()" , 2500) ;
 
 class Goomba{
     constructor( {position, velocity}){ //creating the enemy
@@ -64,7 +87,23 @@ class Goomba{
     update() {
         this.draw()
 
-        this.position.x += this.velocity.x
+          
+
+        console.log(enemyMoveLeft)
+
+        // here switching the left and right to the enemy
+        if(enemyMoveLeft === true){
+            this.position.x += this.velocity.x
+        }else{
+            this.position.x -= this.velocity.x
+        }
+
+        // for(let i= 0; i < timeForSidesEnemy; i ++){
+        //     setTimeout
+        // }
+
+
+      // this.position.x -= this.velocity.x
         this.position.y += this.velocity.y
 
         if(this.position.y + this.height + this.velocity.y <= canvas.height){ //aki ta vendo se e menor pq no canas o num aumenta indo pra baixo, 
@@ -232,7 +271,7 @@ class River {
     //creating ENEMY
        let goombas = [new Goomba({
             position:{
-                x:400,
+                x:800,
                 y:100
             },
             velocity:{
@@ -285,20 +324,6 @@ function animate(){
     
     //c.beginPath()
     c.clearRect(0, 0, canvas.width, canvas.height ) // agora sim limpando o rastro que ficava atras  do player 
-
-//     const imgPLatforms = new Image()
-
-//     console.log(imgPLatforms)
-
-
-//     imgPLatforms.onload = () => {
-
-//     c.drawImage(imgPLatforms, 20, 20, 30, 50)
-//     }
-
-// imgPLatforms.src = './img/platform2.PNG'
-
-
 
 
      //selecting platforms goin trough all of them 
@@ -450,7 +475,7 @@ addEventListener('keydown', ({ keyCode }) => { //ao inves de event pta ver o key
             console.log('up')
             if(canJump === true){
                  // this -=20 will be constant it wont increase the value . player will move  in the same velocity
-            player.velocity.y -= 40 //using negative numbe because the canvas down is positive and up is negative
+            player.velocity.y -= 30 //using negative numbe because the canvas down is positive and up is negative
             }
            
             break
@@ -495,7 +520,7 @@ function changeLifePoints(){
 }
 
 
-
+changeLifePoints()
 
 
 
