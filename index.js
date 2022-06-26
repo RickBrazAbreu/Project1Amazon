@@ -2,22 +2,18 @@
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d') //type of canvas 3d or 2dwdw
 //console.log(c)
-const imgPLatforms = new Image()
-const imgPLayer = new Image()
+
+let life = document.querySelector('#life');
+
+let imgPLatforms = new Image()
+let imgPLayer = new Image()
 
 // const imgPLatforms = new Image()
 
-// console.log(imgPLatforms)
+ //console.log('ola')
 
 
-// imgPLatforms.onload = () => {
 
-//     c.drawImage(imgPLatforms, 20, 20)
-// }
-
-// imgPLatforms.src = './img/platform2.PNG'
-//size of canvas //window.innerWidth makes the canvas fill the whole size of the screen in horizontal
-//canvas.width = window.innerWidth
 canvas.width = 1024
 canvas.height = 576
 
@@ -26,42 +22,19 @@ let canJump = true
 let lifePoints = 3
 
 let enemyMoveLeft = true
-//let timeForSidesEnemy = 10000
+
+let gravity = 1.5
 
 
-// const imgWidth = 30
-// const imgHeight = 30
-
-// function resize() {
-//     canvas.width = 1024
-//     canvas.height = 576
-
-//     c.drawImage(platformImg,0,0, imgWidth , height);
-// }
-
-const gravity = 1.5
-
-// function goLeft(){
-//     enemyMoveLeft = true
-    
-
-// }   setTimeout("goLeft()" , 2000) ; 
-
-//here repeat the same movement forever switching between left and right forever
 let timeForSidesEnemy = 2500
 let t = setInterval(function () {
     enemyMoveLeft = ( enemyMoveLeft == true ? '' : enemyMoveLeft == false);
 }, timeForSidesEnemy);
 
 
-// function goRight(){
-//     if(enemyMoveLeft === true){
-//         enemyMoveLeft = false
-//     }
-//    // enemyMoveLeft = false
-    
-    
-// }   setTimeout("goRight()" , 2500) ;
+
+////////////////////////
+// TESTANDOOO O RESTART.....
 
 class Goomba{
     constructor( {position, velocity}){ //creating the enemy
@@ -89,7 +62,7 @@ class Goomba{
 
           
 
-        console.log(enemyMoveLeft)
+       // console.log(enemyMoveLeft)
 
         // here switching the left and right to the enemy
         if(enemyMoveLeft === true){
@@ -194,7 +167,7 @@ class Platform {
         //c.fillRect(this.position.x, this.position.y, this.width, this.height)
        // const imgPLatforms = new Image()
 
-    console.log(imgPLatforms)
+   // console.log(imgPLatforms)
 
       //switching the old blue box platfofm to an image you created
         //using the same position x/y for this image  
@@ -234,7 +207,7 @@ class River {
 
 
 
-    //creating player
+   //creating player
         //here is actually making the  player show up at the position x / y
         let player = new Player()
 
@@ -283,7 +256,7 @@ class River {
        ] 
 
 
-
+    
 
 
 
@@ -300,11 +273,95 @@ const keys = {
 //this value will be changed every time when you press right checkDistancetoWin +=5 when press left checkDistancetoWin -=5
 let checkDistancetoWin = 0 // will be use to check the distnace player alredy hit and see if he won or not the game
 
+
+
+
+ //HERE  you are createing everything again but without the const or let... so when you call this function ... it will reset the previous creation you made before
+    function init(){
+
+    //creating player
+        //here is actually making the  player show up at the position x / y
+         player = new Player()
+
+       // enemys = new []
+
+    //creating platforms
+        //here is actually making the  plaTFORM show up at the position x / y
+        //const platform = new Platform()
+    //creating multpiles platforms
+         platforms = [
+            new Platform({
+                x: -1,
+                y:480,
+                //image: image
+                }), 
+            new Platform({
+                x: 580,
+                y:480,
+                //image: image
+                }),
+            
+        // new Platform({x: 530, y:500}),
+        // new Platform({x: 930, y:500})
+        ]
+        //creating the rivers
+         rivers = [
+            new River({
+                x: 200,
+                y:550,
+                //image: image
+                })  
+       
+        ]
+    //creating ENEMY
+        goombas = [new Goomba({
+            position:{
+                x:800,
+                y:100
+            },
+            velocity:{
+                x: -0.4,
+                y: 0
+            }
+        })
+
+       ] 
+
+
+
+
+//this value will be changed every time when you press right checkDistancetoWin +=5 when press left checkDistancetoWin -=5
+ checkDistancetoWin = 0 // will be use to check the distnace player alredy hit and see if he won or not the game
+
+    }
+
+
+
+
+
+
+
+    ///////////TESTAANDO RESTART//
+
+    /////////
+    ///////
+    ////
+    ////
+
+
+
 //aki checando todos os objetos no topo da platform ao inves de ser somente o player,, agora pode ser tb os inimigos
 function isOnTopOfPlatform({object, platform}){
     return  (object.position.y + object.height <= platform.position.y && object.position.y + object.height + object.velocity.y >= platform.position.y && object.position.x + object.width >= platform.position.x && object.position.x <= platform.position.x + platform.width )
 
 }
+
+
+function CollisionTop({object1, object2}){
+    return  (object1.position.y + object1.height <= object2.position.y && object1.position.y + object1.height + object1.velocity.y >= object2.position.y && object1.position.x + object1.width >= object2.position.x && object1.position.x <= object2.position.x + object2.width )
+
+}
+
 
 
 //everything in scene need to be called here to be to SHOW UP on screen
@@ -338,8 +395,55 @@ function animate(){
          platform.drawPlatform()
     })
 
-   goombas.forEach(goomba =>{
+    // aki nesse index ta rastreando cada inimigo individual dentro do array dai destroy somente esse q vc pular em cima
+   goombas.forEach((goomba, index) =>{
        goomba.update()
+
+       if ( CollisionTop({
+           object1: player,
+           object2: goomba
+       })) {
+           //here throw the player up
+           player.velocity.y -= 35
+           //aki deleta o inimigo
+           //            (inimigo, quantidade a ser destruido  = 1)
+           goombas.splice(index , 1)
+           console.log('relouda')
+       } else if (
+           //position.x e o lado direito do player
+           //player.width e o tamanho inteiro do player  .... se o canot esq ate o final do corpo do player encostar no canto esq do inimio..=== collision ..aki somente lado esq do goomba
+           player.position.x + player.width >= goomba.position.x && 
+           //if player altura + player foot  >= goomba altura ( lembre q aki e tudo reverse pra cima e negativo)
+           player.position.y + player.height >= goomba.position.y  &&
+           player.position.x <= goomba.position.x + goomba.width
+           
+
+       )
+       {
+
+       changeLifePoints()
+       init()
+        // player.position.x -= 65
+        // //player.velocity.y -= 1.9
+        // //changeLifePoints()
+        //    console.log('relou esq')
+       }
+       else if(
+        player.position.x + player.width <= goomba.position.x && 
+        //if player altura + player foot  >= goomba altura ( lembre q aki e tudo reverse pra cima e negativo)
+        // player.position.y + player.height <= goomba.position.y  &&
+        player.position.x >= goomba.position.x + goomba.width
+        
+       ){
+        changeLifePoints()
+        init()
+        // player.position.x = 2
+        // //player.velocity.y -= 1.9
+        // //changeLifePoints()
+        //    console.log('relou esq')
+       }
+
+
    })
 
 
@@ -442,11 +546,17 @@ function animate(){
 
 
     
+    
     if(checkDistancetoWin >= 1000){
-        console.log('YOU WIN')
+        //console.log('YOU WIN')
     }
 
-   
+    if(player.position.y + player.height >= canvas.height){
+        changeLifePoints()
+        init()
+        console.log('you lose')
+
+    }
 
     
 
@@ -460,19 +570,19 @@ addEventListener('keydown', ({ keyCode }) => { //ao inves de event pta ver o key
     console.log(keyCode) // here calling the event inside the console you will be able to find the key code. ex: press 'A' and it shows the keycodecode '65'
     switch(keyCode){
         case 65:  //a
-            console.log('left')
+           // console.log('left')
             keys.left.pressed = true
             break
         case 83:  //s
-            console.log('down')
+           // console.log('down')
             break
         case 68:  //d
-            console.log('right')
+           // console.log('right')
             keys.right.pressed = true
             break
             //JUMP
         case 87:  //w
-            console.log('up')
+           // console.log('up')
             if(canJump === true){
                  // this -=20 will be constant it wont increase the value . player will move  in the same velocity
             player.velocity.y -= 30 //using negative numbe because the canvas down is positive and up is negative
@@ -482,7 +592,7 @@ addEventListener('keydown', ({ keyCode }) => { //ao inves de event pta ver o key
 
     }//switch
 
-    console.log(keys.right.pressed)
+   // console.log(keys.right.pressed)
 })
 
 //here is the same function as above this one... but now with keyup..
@@ -490,37 +600,37 @@ addEventListener('keyup', ({ keyCode }) => { //ao inves de event pta ver o keyCo
     console.log(keyCode) // here calling the event inside the console you will be able to find the key code. ex: press 'A' and it shows the keycodecode '65'
     switch(keyCode){
         case 65:  //a
-            console.log('left')
+           // console.log('left')
             keys.left.pressed = false
             //player.position.x -= 10
             break
         case 83:  //s
-            console.log('down')
+           // console.log('down')
             break
         case 68:  //d
-            console.log('right')
+            //console.log('right')
             keys.right.pressed = false
            // player.velocity.x = 0 // when keyup set this velocity to 0
             break
         case 87:  //w
-            console.log('up')
+            //console.log('up')
             //player.velocity.y -= 20 //using negative numbe because the canvas down is positive and up is negative
             break
 
     }//switch
 
-    console.log(keys.right.pressed)
+    //console.log(keys.right.pressed)
 })
 
 //function fixJump
 function changeLifePoints(){
-    let life = document.querySelector('#life');
-    lifePoints--
+    //let life = document.querySelector('#life');
+    lifePoints -= 1
     life.innerHTML = lifePoints
 }
 
-
-changeLifePoints()
+//here is working ...need to call it every time player looses life
+//changeLifePoints()
 
 
 
