@@ -6,8 +6,16 @@ const c = canvas.getContext('2d') //type of canvas 3d or 2dwdw
 let life = document.querySelector('#life');
 let score = document.querySelector('#score');
 
+
+let initialScreen = document.querySelector('.ScreenFront');
+let playbtn = document.querySelector('.play');
+let  restartbtn = document.querySelector('.restart');
+let menubtn = document.querySelector ('.menu');
+
 let imgPLatforms = new Image()
 let imgPLayer = new Image()
+let imgMonkey = new Image()
+let imgHouse = new Image()
 
 // const imgPLatforms = new Image()
 
@@ -35,8 +43,37 @@ let t = setInterval(function () {
 
 
 
+
+
+
 ////////////////////////
 // TESTANDOOO O RESTART.....
+
+class House{
+    constructor( {x , y }){ //creating the enemy
+        this.position = {
+            x,
+            y
+
+        }
+        
+
+        this.width = 350
+        this.height = 350
+
+    }//constructor 
+
+    drawHouse(){ //now drawing the enemy
+        //c.fillStyle = 'orange'
+        c.drawImage( imgHouse,this.position.x, this.position.y, this.width, this.height) //here chamandp o canvas e pos e width..height
+
+        imgHouse.src = './img/house.PNG'
+
+    }
+
+}//class house
+
+
 
 class Goomba{
     constructor( {position, velocity}){ //creating the enemy
@@ -50,14 +87,17 @@ class Goomba{
             y: velocity.y,
         }   //give movement to the enemy
 
-        this.width = 50
-        this.height = 50
+        this.width = 60
+        this.height = 80
 
     }//constructor 
 
     draw(){ //now drawing the enemy
-        c.fillStyle = 'orange'
-        c.fillRect(this.position.x, this.position.y, this.width, this.height) //here chamandp o canvas e pos e width..height
+        //c.fillStyle = 'orange'
+        c.drawImage( imgMonkey,this.position.x, this.position.y, this.width, this.height) //here chamandp o canvas e pos e width..height
+
+        imgMonkey.src = './img/gorleft.PNG'
+
     }
     update() {
         this.draw()
@@ -150,6 +190,7 @@ class Player{
 }//playerfunction
 
 
+
 //CREATING THE PLATFORM
 class Platform {
     constructor( {x , y  }){
@@ -167,9 +208,6 @@ class Platform {
         // here was the old way to make the platforms now is comented because we will add the new image
         //c.fillStyle = 'blue'
         //c.fillRect(this.position.x, this.position.y, this.width, this.height)
-       // const imgPLatforms = new Image()
-
-   // console.log(imgPLatforms)
 
       //switching the old blue box platfofm to an image you created
         //using the same position x/y for this image  
@@ -230,6 +268,75 @@ class River {
                 y:480,
                 //image: image
                 }),
+            new Platform({
+                x: 980,
+                y:380,
+                
+                //image: image
+                }),
+            new Platform({
+                x:1420,
+                y:380,
+                    
+                //image: image
+                }),
+            new Platform({
+                x:1850,
+                y:280,
+                        
+                //image: image
+                }),
+            new Platform({
+                x:2490,
+                y:480,
+                            
+                //image: image
+                }),
+            new Platform({
+                x:2990,
+                y:480,
+                                
+                //image: image
+                }),
+            new Platform({
+                x:3400,
+                y:380,
+                                    
+                //image: image
+                }),
+            new Platform({
+                x:3840,
+                y:480,
+                                        
+                //image: image
+                }),
+            new Platform({
+                x:4240,
+                y:480,
+                                            
+                //image: image
+                }),
+            new Platform({
+                x:4640,
+                y:480,
+                                                
+                //image: image
+                }),
+            new Platform({
+                x:5040,
+                y:480,
+                                                    
+                //image: image
+                }),
+            new Platform({
+                x:5440,
+                y:480,
+                                                        
+                //image: image
+                })
+           
+                   
+
             
         // new Platform({x: 530, y:500}),
         // new Platform({x: 930, y:500})
@@ -243,8 +350,17 @@ class River {
                 })  
        
         ]
+
+        //creating HOUSE
+        let houses = [
+            new House({
+                x: 4450,
+                y: 180
+            })
+        ]
     //creating ENEMY
-       let goombas = [new Goomba({
+       let goombas = [
+           new Goomba({
             position:{
                 x:800,
                 y:100
@@ -253,7 +369,87 @@ class River {
                 x: -0.4,
                 y: 0
             }
-        })
+        }),
+        new Goomba({
+            position:{
+                x:1200,
+                y:100
+            },
+            velocity:{
+                x: -0.4,
+                y: 0
+            }
+        }),
+        new Goomba({
+            position:{
+                x:1600,
+                y:100
+            },
+            velocity:{
+                x: -0.4,
+                y: 0
+            }
+        }),
+        new Goomba({
+            position:{
+                x:2010,
+                y:90
+            },
+            velocity:{
+                x: -0.4,
+                y: 0
+            }
+        }),
+        new Goomba({
+            position:{
+                x:2600,
+                y:90
+            },
+            velocity:{
+                x: -0.4,
+                y: 0
+            }
+        }),
+        new Goomba({
+            position:{
+                x:2670,
+                y:90
+            },
+            velocity:{
+                x: -0.4,
+                y: 0
+            }
+        }),
+        new Goomba({
+            position:{
+                x:3090,
+                y:90
+            },
+            velocity:{
+                x: -0.4,
+                y: 0
+            }
+        }),
+        new Goomba({
+            position:{
+                x:3590,
+                y:90
+            },
+            velocity:{
+                x: -0.4,
+                y: 0
+            }
+        }),
+        new Goomba({
+            position:{
+                x:4000,
+                y:90
+            },
+            velocity:{
+                x: -0.4,
+                y: 0
+            }
+        }),
 
        ] 
 
@@ -311,6 +507,72 @@ let checkDistancetoWin = 0 // will be use to check the distnace player alredy hi
                 y:480,
                 //image: image
                 }),
+            new Platform({
+                x: 980,
+                y:380,
+                
+                //image: image
+                }),
+            new Platform({
+                x:1420,
+                y:380,
+                    
+                //image: image
+                }),
+            new Platform({
+                x:1850,
+                y:280,
+                        
+                //image: image
+                }),
+            new Platform({
+                x:2490,
+                y:480,
+                            
+                //image: image
+                }),
+            new Platform({
+                x:2990,
+                y:480,
+                                
+                //image: image
+                }),
+            new Platform({
+                x:3400,
+                y:380,
+                                    
+                //image: image
+                }),
+            new Platform({
+                x:3840,
+                y:480,
+                                        
+                //image: image
+                }),
+            new Platform({
+                x:4240,
+                y:480,
+                                            
+                //image: image
+                }),
+            new Platform({
+                x:4640,
+                y:480,
+                                                
+                //image: image
+                }),
+            new Platform({
+                x:5040,
+                y:480,
+                                                    
+                //image: image
+                }),
+            new Platform({
+                x:5440,
+                y:480,
+                                                        
+                //image: image
+                })
             
         // new Platform({x: 530, y:500}),
         // new Platform({x: 930, y:500})
@@ -325,26 +587,113 @@ let checkDistancetoWin = 0 // will be use to check the distnace player alredy hi
        
         ]
     //creating ENEMY
-        goombas = [new Goomba({
-            position:{
-                x:800,
-                y:100
-            },
-            velocity:{
-                x: -0.4,
-                y: 0
-            }
-        })
+        goombas = [
+            new Goomba({
+                position:{
+                    x:800,
+                    y:100
+                },
+                velocity:{
+                    x: -0.4,
+                    y: 0
+                }
+            }),
+            new Goomba({
+                position:{
+                    x:1200,
+                    y:100
+                },
+                velocity:{
+                    x: -0.4,
+                    y: 0
+                }
+            }),
+            new Goomba({
+                position:{
+                    x:1600,
+                    y:100
+                },
+                velocity:{
+                    x: -0.4,
+                    y: 0
+                }
+            }),
+            new Goomba({
+                position:{
+                    x:2010,
+                    y:90
+                },
+                velocity:{
+                    x: -0.4,
+                    y: 0
+                }
+            }),
+            new Goomba({
+                position:{
+                    x:2600,
+                    y:90
+                },
+                velocity:{
+                    x: -0.4,
+                    y: 0
+                }
+            }),
+            new Goomba({
+                position:{
+                    x:2670,
+                    y:90
+                },
+                velocity:{
+                    x: -0.4,
+                    y: 0
+                }
+            }),
+            new Goomba({
+                position:{
+                    x:3090,
+                    y:90
+                },
+                velocity:{
+                    x: -0.4,
+                    y: 0
+                }
+            }),
+            new Goomba({
+                position:{
+                    x:3590,
+                    y:90
+                },
+                velocity:{
+                    x: -0.4,
+                    y: 0
+                }
+            }),
+            new Goomba({
+                position:{
+                    x:4000,
+                    y:90
+                },
+                velocity:{
+                    x: -0.4,
+                    y: 0
+                }
+            })
 
        ] 
 
-
+    //creating HOUSE
+     houses = [
+     new House({
+            x: 4450,
+            y: 180
+        })
+]
 
 
 //this value will be changed every time when you press right checkDistancetoWin +=5 when press left checkDistancetoWin -=5
  checkDistancetoWin = 0 // will be use to check the distnace player alredy hit and see if he won or not the game
 
-    }
+}//function INIT()
 
 
 
@@ -394,11 +743,18 @@ function animate(){
     c.clearRect(0, 0, canvas.width, canvas.height ) // agora sim limpando o rastro que ficava atras  do player 
 
 
+    houses.forEach(house => {
+        house.drawHouse()
+    })
+
+
      //selecting platforms goin trough all of them 
      rivers.forEach(river => {
         //here drawing the platform making the platform show up
          river.drawRiver()
     })
+
+    
     
     //selecting platforms goin trough all of them 
     platforms.forEach(platform => {
@@ -434,6 +790,7 @@ function animate(){
        {
 
        changeLifePoints()
+       ResetWholeGame()
        init()
         // player.position.x -= 65
         // //player.velocity.y -= 1.9
@@ -448,6 +805,7 @@ function animate(){
         
        ){
         changeLifePoints()
+        ResetWholeGame()
         init()
         // player.position.x = 2
         // //player.velocity.y -= 1.9
@@ -484,12 +842,20 @@ function animate(){
               //it just change when platform moves
             checkDistancetoWin += 5 //heree going up with the distance check if player won the game
             
+
+            houses.forEach(house => {
+                house.position.x -= 5
+                house.drawHouse()
+            })
+
             platforms.forEach(platform => {//now the player respect all the platforms in the array
                 platform.position.x -= 5 //same speed as the player moving
             })
             rivers.forEach(river => {//now the player respect all the platforms in the array
                 river.position.x -= 5 //same speed as the player moving
             })
+
+            
 
             goombas.forEach(goomba => {//now the player respect all the platforms in the array
                 goomba.position.x -= 5 //same speed as the player moving
@@ -502,6 +868,10 @@ function animate(){
             //it just change when platform moves
             checkDistancetoWin -= 5  //heree going up with the distance check if player lose the game
             
+            houses.forEach(house => {
+                house.position.x += 5
+                house.drawHouse()
+            })
 
             //stop platforms to move
             platforms.forEach(platform => {//now the player respect all the platforms in the array
@@ -511,6 +881,8 @@ function animate(){
             rivers.forEach(river => {//now the player respect all the platforms in the array
                 river.position.x += 5 //same speed as the player moving
             })
+
+            
 
             // rivers.forEach(river => {//now the player respect all the platforms in the array
             //     river.position.x += 5 //same speed as the player moving
@@ -558,15 +930,18 @@ function animate(){
 
 
     
-    
+    console.log(checkDistancetoWin)
     if(checkDistancetoWin >= 1000){
-        //console.log('YOU WIN')
+        
+        console.log('YOU WIN')
     }
 
     if(player.position.y + player.height >= canvas.height){
         changeLifePoints()
+        ResetWholeGame()
         //score10()
         init()
+        console.log(lifePoints)
         console.log('you lose')
 
     }
@@ -645,6 +1020,41 @@ function changeLifePoints(){
 function score10(){
     scorePoints += 10
     score.innerHTML = scorePoints
+    // if(lifePoints <= 0){
+    //     console.log(lifePoints)
+    //    window.location.reload();
+    // }
+}
+
+
+
+function ResetWholeGame(){
+    if(lifePoints <= 0){
+        console.log(lifePoints)
+       location.reload();
+    }
+   
+}
+ResetWholeGame()
+
+
+function PLAYGAME (){
+
+    initialScreen.style.display = 'none'
+}
+function RESTATGAME() {
+    initialScreen.style.display = 'none'
+    location.reload()
+  
+    init()
+    
+    
+}
+function MENUBTN() {
+    //initialScreen.style.display = 'flex'
+    location.reload()
+    //init()
+    
 }
 
 //score10()

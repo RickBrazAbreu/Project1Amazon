@@ -8,59 +8,48 @@
     <link rel="stylesheet" href="/index.css">
     <title>AMAZON SURVIVE</title>
 </head>
-<style>
-  body{
-    margin: 0;
-    background-color: rgb(140, 136, 136);
-    display: flex;
-    align-items: center; /*made thins be in hte middle*/
-    justify-content: center;  /* here made the canvas or other obj insde thebody be in the middle*/
-    height: 100vh;
-    width:  100vw;
-  }
-  .holdscreen{
-    width: 100%;
-    height: 100%;
-    background-color: rgb(217, 238, 238);
-    display:flexbox;
-    align-items: center; /*made thins be in hte middle*/
-    justify-content: center; 
 
-  }
- 
- 
-  canvas{
-    background-color: aqua;
-    margin-top: 15px;
-    margin-left: 140px;
-    width: 800px;
-    height: 576;
-  }
-  .holdscreen .screens{
-    height: 35px;
-    background-color: aquamarine;
-    display: flex;
-    justify-content: space-between;
-  }
-  .life{
-    background-color: blueviolet;
-    margin-left: 50px;
-    margin-right: 50px;
-    width: 60px;
-  }
-
-</style>
 <body>
+  <!-- HERE SCREEN TO PLAY -->
   <div class="holdscreen">
     
     <div class="screens">
-      <div id="life" class="life">3</div>
-      <div id="score" class="life">0</div>
-      <div  class="life">8</div>
+      <div class="lifetext"> LIFE
+        <div id="life" class="life">3</div>
+      </div>
+      <div class="scoretext"> SCORE
+        <div id="score" class="life">0</div>
+       </div>
+
+
+    <button class="playbtn play" onclick="PLAYGAME()">PLAY</button>
+    <button class="playbtn restart" onclick="RESTATGAME()"> RESTART</button>
+    <button class="playbtn menu" onclick="MENUBTN()"> MENU</button>
+      
+      <!-- <div  class="life">8</div> -->
     </div>
-    <canvas></canvas>
+    <canvas>  </canvas>
+    
+    
 
   </div>
+  
+
+
+  <div class="ScreenFront" style="display: flex ;">
+    <div class="container">
+      <div class="imgexplain">
+        <h1 class="text">Hello <br> Welcome to AMAZON GAME!!!</h1>
+        <h2 class="text">Hit the "PLAY" Button to start the game</h2>
+        <img src="./img/imgExplainGame.png">
+      </div>
+    </div>
+    
+  </div>
+
+
+
+
    
 
 
