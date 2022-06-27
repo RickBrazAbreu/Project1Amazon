@@ -9,6 +9,7 @@ let score = document.querySelector('#score');
 
 let initialScreen = document.querySelector('.ScreenFront');
 let loserScreen = document.querySelector('.ScreenLoser');
+let winnerScreen = document.querySelector('.ScreenWinner');
 let playbtn = document.querySelector('.play');
 let  restartbtn = document.querySelector('.restart');
 let menubtn = document.querySelector ('.menu');
@@ -17,6 +18,8 @@ let imgPLatforms = new Image()
 let imgPLayer = new Image()
 let imgMonkey = new Image()
 let imgHouse = new Image()
+
+let imgforest = new Image()
 
 // const imgPLatforms = new Image()
 
@@ -740,6 +743,14 @@ function animate(){
     c.fillStyle = 'white'
 
     
+       //c.drawImage (imgforest)
+
+        //imgforest.src = './img/arvores.png'
+    
+      
+    
+        
+    
     //c.beginPath()
     c.clearRect(0, 0, canvas.width, canvas.height ) // agora sim limpando o rastro que ficava atras  do player 
 
@@ -772,6 +783,7 @@ function animate(){
            object2: goomba
        })) {
            //here throw the player up
+           monkeyDieSound()
            player.velocity.y -= 35
            score10()
            //aki deleta o inimigo
@@ -933,8 +945,8 @@ function animate(){
     
     console.log(checkDistancetoWin)
     if(checkDistancetoWin >= 3970){
-        
-        console.log('YOU WIN')
+        winnerScreen.style.display = 'flex'
+        //console.log('YOU WIN')
     }
 
     if(player.position.y + player.height >= canvas.height){
@@ -1052,9 +1064,12 @@ ResetWholeGame()
 
 function PLAYGAME (){
 
+    gamestartSound()
+    forestSOund()
     initialScreen.style.display = 'none'
 }
 function RESTATGAME() {
+    gamestartSound()
     initialScreen.style.display = 'none'
     loserScreen.style.display = 'none'
     //location.reload()
@@ -1064,11 +1079,52 @@ function RESTATGAME() {
     
 }
 function MENUBTN() {
+    //monkeyDieSound()
+    gamestartSound()
     //initialScreen.style.display = 'flex'
     location.reload()
     //init()
     
 }
+
+
+
+
+function WinnerButton(){
+    gamestartSound()
+    location.reload()
+   // winnerScreen.style.display = 'none'
+}
+
+
+//SOUNDS//////////
+
+
+
+function forestSOund(){
+    var audio = new Audio('./audio/forestsound.wav')
+    audio.play( )
+}
+
+function gamestartSound(){
+    var audiogamestart = new Audio('./audio/gamestart.mp3')
+    audiogamestart.play( )
+   
+}
+
+function monkeyDieSound(){
+    var monkeydiesound = new Audio('./audio/monkeydie.mp3')
+    monkeydiesound.volume = 0.3
+    monkeydiesound.play( )
+}
+
+
+
+
+
+
+
+
 
 // function loser(){
 //     if( lifePoints <= 1){

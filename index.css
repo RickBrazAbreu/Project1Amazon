@@ -20,6 +20,7 @@ body{
  
   canvas{
     position: relative;
+    /* background-image: './img/arvores.png'; */
     background-color: aqua;
     margin-top: 115px;
     margin-left: 30%;
@@ -118,7 +119,7 @@ body{
   }
 
   .ScreenWinner{
-      /* display: flex; */
+      display: none;
       justify-content: center;
       align-items: center;
       margin-left: 5%;
@@ -138,4 +139,11 @@ body{
 
   .ScreenWinner .containerWinner .imgexplain{
     text-align: center;
+  }
+  .keepgoing{
+    width:  160px;
+    height: 55px;
+    margin: 5px;
+    border-radius:20px;
+    background-color: aliceblue;
   }
